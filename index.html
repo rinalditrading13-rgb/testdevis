@@ -348,79 +348,40 @@ function render() {
   const content = document.getElementById("content");
   content.innerHTML = "";
 
-  const today = new Date();
-  today.setHours(0,0,0,0);
-
   if (currentTab === "mail") {
-    const items = data.filter(item => {
-      const d = new Date(item.date);
-      d.setHours(0,0,0,0);
-      return d <= today;
-    });
-
-    if (items.length === 0) {
-      content.innerHTML = `<div class="empty">✅ Rien à vérifier aujourd’hui</div>`;
-      return;
-    }
-
-    items.forEach(item => {
-      const d = new Date(item.date);
-      d.setHours(0,0,0,0);
-
-      let statusClass = "green";
-      if (d < today) {
-        statusClass = "red";
-      } else if (d.getTime() === today.getTime()) {
-        statusClass = "orange";
-      }
-
-      content.innerHTML += `
-<div class="item ${statusClass}" id="item-${item.id}">
+    content.innerHTML = `
+<div class="item">
   <div class="item-info">
-    <h3>${item.name}</h3>
-    <p>${formatDateFR(item.date)}</p>
+    <h3>Test mail vocal</h3>
+    <p>Démo publique simplifiée</p>
   </div>
-  <button onclick="openPopup('${item.id}')">Valider</button>
-</div>`;
-    });
+  <button>Tester</button>
+</div>
 
+<div class="item">
+  <div class="item-info">
+    <h3>Exemple</h3>
+    <p>Écris un mail pour remercier un client</p>
+  </div>
+</div>
+    `;
   } else if (currentTab === "devis") {
-    const sorted = [...data].sort((a,b) => new Date(a.date) - new Date(b.date));
-
-    if (sorted.length === 0) {
-      content.innerHTML = `<div class="empty">Aucune donnée</div>`;
-      return;
-    }
-
-    sorted.forEach(item => {
-      content.innerHTML += `
+    content.innerHTML = `
 <div class="item">
   <div class="item-info">
-    <h3>${item.name}</h3>
-    <p>${formatDateFR(item.date)}</p>
+    <h3>Test devis vocal</h3>
+    <p>Démo publique simplifiée</p>
   </div>
-</div>`;
-    });
+  <button>Tester</button>
+</div>
 
-  } else if (currentTab === "history") {
-    const sortedHistory = [...historyData].sort((a,b) => new Date(b.date) - new Date(a.date));
-
-    if (sortedHistory.length === 0) {
-      content.innerHTML = `<div class="empty">Aucun historique</div>`;
-      return;
-    }
-
-    sortedHistory.forEach(item => {
-      const userLine = item.user ? ` • ${item.user}` : "";
-
-      content.innerHTML += `
 <div class="item">
   <div class="item-info">
-    <h3>${item.name}</h3>
-    <p>${formatDateFR(item.date)}${userLine}</p>
+    <h3>Exemple</h3>
+    <p>Pose de carrelage, 20 m² à 20 euros</p>
   </div>
-</div>`;
-    });
+</div>
+    `;
   }
 }
 
