@@ -349,23 +349,53 @@ function render() {
   content.innerHTML = "";
 
   if (currentTab === "mail") {
-    content.innerHTML = `
+  content.innerHTML = `
 <div class="item">
-  <div class="item-info">
-    <h3>Test mail vocal</h3>
-    <p>Démo publique simplifiée</p>
-  </div>
-  <button>Tester</button>
+  <div class="item-info">
+    <h3>Test mail vocal</h3>
+    <p>Démo publique simplifiée</p>
+  </div>
 </div>
 
 <div class="item">
-  <div class="item-info">
-    <h3>Exemple</h3>
-    <p>Écris un mail pour remercier un client</p>
-  </div>
+  <div class="item-info">
+    <h3>Démo publique</h3>
+    <p>Cette démonstration est volontairement simplifiée pour permettre un test rapide. Les versions professionnelles sont plus complètes, plus fiables et adaptées à un usage réel.</p>
+  </div>
 </div>
-    `;
-  } else if (currentTab === "devis") {
+
+<div class="item">
+  <div class="item-info">
+    <h3>Exemples à dicter</h3>
+    <p>Écris un mail à Anthony pour le remercier de son appel. Dis-lui que son devis sera envoyé aujourd’hui. Termine en lui souhaitant une bonne journée.</p>
+  </div>
+</div>
+
+<div class="item">
+  <div class="item-info">
+    <h3>Votre email</h3>
+    <p>Entrez votre email pour recevoir le résultat</p>
+  </div>
+  <input id="emailInput" type="email" placeholder="email@exemple.com"
+    style="height:31px; border-radius:10px; border:none; padding:0 10px; font-size:11px; width:140px;">
+</div>
+
+<div class="item">
+  <div class="item-info">
+    <h3>Dictée vocale</h3>
+    <p>Cliquez puis commencez à parler</p>
+  </div>
+  <button>Commencer</button>
+</div>
+
+<div class="item">
+  <div class="item-info">
+    <h3>Information</h3>
+    <p>La dictée est limitée à 5 lignes maximum pour ce test. La demande sera envoyée automatiquement à la fin de la dictée.</p>
+  </div>
+</div>
+  `;
+} else if (currentTab === "devis") {
     content.innerHTML = `
 <div class="item">
   <div class="item-info">
