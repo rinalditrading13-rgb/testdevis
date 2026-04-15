@@ -379,23 +379,37 @@ function render() {
 </div>
   `;
 } else if (currentTab === "devis") {
-    content.innerHTML = `
+  content.innerHTML = `
 <div class="item">
   <div class="item-info">
     <h3>Test devis vocal</h3>
-    <p>Démo publique simplifiée</p>
+    <p>Entrez votre email, puis dictez votre demande. Vous recevrez votre devis directement par mail.</p>
   </div>
-  <button>Tester</button>
 </div>
 
 <div class="item">
   <div class="item-info">
-    <h3>Exemple</h3>
-    <p>Pose de carrelage, 20 m² à 20 euros</p>
+    <h3>Exemples à dicter</h3>
+    <p>Pose de carrelage, 20 m² à 20 euros le mètre carré. Fourniture de spots, 10 pièces à 15 euros l’unité. Installation portail, forfait à 3000 euros.</p>
   </div>
 </div>
-    `;
-  }
+
+<div class="item" style="display:block;">
+  <div style="margin-bottom:16px;">
+    <input id="emailInput" type="email" placeholder="Votre email"
+      style="height:31px; border-radius:10px; border:none; padding:0 10px; font-size:11px; width:100%; box-sizing:border-box;">
+  </div>
+
+  <div style="display:flex; justify-content:center; margin-bottom:14px;">
+    <button>Commencer</button>
+  </div>
+
+  <div class="item-info">
+    <p>Pour ce test, vous pouvez dicter jusqu’à 5 lignes maximum. Votre devis sera généré et envoyé automatiquement à la fin de la dictée.</p>
+  </div>
+</div>
+  `;
+}
 }
 
 function openPopup(id) {
