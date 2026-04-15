@@ -287,7 +287,7 @@ const webhookHistory = "https://hook.eu1.make.com/hvkdbbarp5tgk0azcwftpx6glful4y
 let data = [];
 let historyData = [];
 let currentId = null;
-let currentTab = "today";
+let currentTab = "mail";
 
 async function loadData() {
   try {
@@ -351,7 +351,7 @@ function render() {
   const today = new Date();
   today.setHours(0,0,0,0);
 
-  if (currentTab === "today") {
+  if (currentTab === "mail") {
     const items = data.filter(item => {
       const d = new Date(item.date);
       d.setHours(0,0,0,0);
@@ -384,7 +384,7 @@ function render() {
 </div>`;
     });
 
-  } else if (currentTab === "planning") {
+  } else if (currentTab === "devis") {
     const sorted = [...data].sort((a,b) => new Date(a.date) - new Date(b.date));
 
     if (sorted.length === 0) {
