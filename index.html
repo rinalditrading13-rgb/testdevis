@@ -270,16 +270,16 @@ button:active {
 
 <div id="app">
 
-<header>
-<img src="https://i.imgur.com/1ZFTLIo.png" class="logo" alt="Clarity Systems">
-</header>
+  <header>
+    <img src="https://i.imgur.com/1ZFTLIo.png" class="logo" alt="Clarity Systems">
+  </header>
 
-<div class="tabs">
-  <div class="tab active" onclick="switchTab('mail', this)">Mail vocal</div>
-  <div class="tab" onclick="switchTab('devis', this)">Devis vocal</div>
-</div>
+  <div class="tabs">
+    <div class="tab active" onclick="switchTab('mail', this)">Mail vocal</div>
+    <div class="tab" onclick="switchTab('devis', this)">Devis vocal</div>
+  </div>
 
-<div id="content"></div>
+  <div id="content"></div>
 
 </div>
 
@@ -302,6 +302,7 @@ let data = [];
 let historyData = [];
 let currentId = null;
 let currentTab = "mail";
+
 let emailStore = {
   mail: "",
   devis: ""
@@ -335,6 +336,9 @@ async function loadData() {
   } catch {
     historyData = [];
   }
+
+  render();
+}
 
 function isValidEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
@@ -382,9 +386,6 @@ function stopDictation() {
     render();
   }, 1800);
 }
-  
-  render();
-}
 
 function switchTab(tab, el) {
   currentTab = tab;
@@ -424,14 +425,13 @@ function render() {
   content.innerHTML = "";
 
   if (currentTab === "mail") {
-  content.innerHTML = `
+    content.innerHTML = `
 <div class="item">
   <div class="item-info">
     <h3>Test mail vocal</h3>
-<p>Entrez votre email, puis dictez votre message.<br>
-Vous recevrez le résultat directement par mail.</p>
+    <p>Entrez votre email, puis dictez votre message.<br>
+    Vous recevrez le résultat directement par mail.</p>
     <br>
-    <p>
     <h3>Exemple à dicter</h3>
     <p>Écris un mail à Anthony pour le remercier de son appel.<br>
     Dis-lui que son devis sera envoyé aujourd’hui.<br>
@@ -509,32 +509,21 @@ Vous recevrez le résultat directement par mail.</p>
     `
   }
 </div>
-
-  <div style="display:flex; justify-content:center; margin-bottom:14px;">
-    <button>Commencer</button>
-  </div>
-
-  <div class="item-info">
-   <p>Votre mail sera généré et envoyé automatiquement.</p>
-   <p style="font-size:10px; opacity:0.6;">Version de démonstration simplifiée — les versions professionnelles sont plus complètes.</p>
-  </div>
-</div>
-  `;
-} else if (currentTab === "devis") {
-  content.innerHTML = `
+    `;
+  } else if (currentTab === "devis") {
+    content.innerHTML = `
 <div class="item">
   <div class="item-info">
     <h3>Test devis vocal</h3>
     <p>Entrez votre email, puis dictez votre devis.<br>
     Vous recevrez votre PDF directement par mail.</p>
     <br>
-    <p>
     <h3>Exemples à dicter</h3>
     <p>
 • Pose de carrelage, 20 m² à 20 euros le mètre carré<br>
 • Fourniture de spots, 10 pièces à 15 euros l’unité<br>
 • Installation portail, forfait à 3000 euros
-</p>
+    </p>
   </div>
 </div>
 
@@ -574,7 +563,8 @@ Vous recevrez le résultat directement par mail.</p>
         <button onclick="startDictation()">Commencer</button>
       </div>
       <div class="item-info">
-        <p>Vous pouvez dicter jusqu’à 5 lignes. Votre devis sera généré et envoyé automatiquement à la fin de la dictée.</p>
+        <p>Pour ce test, vous pouvez dicter jusqu’à 5 lignes.<br>
+        Votre devis sera généré et envoyé automatiquement à la fin de la dictée.</p>
       </div>
       <div class="item-info" style="margin-top:6px;">
         <p style="font-size:10px; opacity:0.6;">Version de démonstration simplifiée — les versions professionnelles sont plus complètes.</p>
@@ -608,19 +598,8 @@ Vous recevrez le résultat directement par mail.</p>
     `
   }
 </div>
-
-  <div style="display:flex; justify-content:center; margin-bottom:14px;">
-    <button>Commencer</button>
-  </div>
-
-  <div class="item-info">
-    <p>Pour ce test, vous pouvez dicter jusqu’à 5 lignes.<br>
-    Votre devis sera généré et envoyé automatiquement.</p>
-    <p style="font-size:10px; opacity:0.6;">Version de démonstration simplifiée — les versions professionnelles sont plus complètes.</p>
-  </div>
-</div>
-  `;
-}
+    `;
+  }
 }
 
 function openPopup(id) {
@@ -633,7 +612,7 @@ function closePopup() {
 }
 
 async function confirmValidation() {
-  const card = document.getElementById(`item-${currentId}`);
+  const card = document.getElementById(\`item-\${currentId}\`);
 
   try {
     await fetch(webhookPost, {
