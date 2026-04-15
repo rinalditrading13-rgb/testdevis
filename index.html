@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Clarity Systems - Démo vocale</title>
 
 <style>
@@ -89,18 +88,6 @@ header {
   transform: scale(0.985);
 }
 
-.item.red {
-  border-left: 4px solid #e74c3c;
-}
-
-.item.green {
-  border-left: 4px solid #2ecc71;
-}
-
-.item.orange {
-  border-left: 4px solid #f39c12;
-}
-
 .item-info {
   display: flex;
   flex-direction: column;
@@ -155,14 +142,6 @@ button:disabled {
   box-shadow: none;
 }
 
-.empty {
-  text-align: center;
-  color: #777;
-  margin-top: 40px;
-  font-size: 13px;
-  animation: fadeIn 0.25s ease;
-}
-
 .success-toast {
   position: fixed;
   left: 50%;
@@ -178,11 +157,6 @@ button:disabled {
   backdrop-filter: blur(10px);
   z-index: 9999;
   animation: toastIn 0.25s ease;
-}
-
-.item.removing {
-  opacity: 0;
-  transform: translateX(10px) scale(0.98);
 }
 
 .input-label {
@@ -294,11 +268,6 @@ button:disabled {
   line-height: 1.35;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
 @keyframes toastIn {
   from { opacity: 0; transform: translateX(-50%) translateY(8px); }
   to { opacity: 1; transform: translateX(-50%) translateY(0); }
@@ -309,45 +278,32 @@ button:disabled {
 <body>
 
 <div id="app">
+  <header>
+    <img src="https://i.imgur.com/1ZFTLIo.png" class="logo" alt="Clarity Systems">
+  </header>
 
-<header>
-  <img src="https://i.imgur.com/1ZFTLIo.png" class="logo" alt="Clarity Systems">
-</header>
+  <div class="tabs">
+    <div class="tab active" onclick="switchTab('mail', this)">Mail vocal</div>
+    <div class="tab" onclick="switchTab('devis', this)">Devis vocal</div>
+  </div>
 
-<div class="tabs">
-  <div class="tab active" onclick="switchTab('mail', this)">Mail vocal</div>
-  <div class="tab" onclick="switchTab('devis', this)">Devis vocal</div>
-</div>
-
-<div id="content"></div>
-
+  <div id="content"></div>
 </div>
 
 <script>
-/*
-  REMPLACE CES 2 WEBHOOKS PAR LES TIENS
-  webhookMail  = scénario Make qui reçoit l'email + la dictée du mail
-  webhookDevis = scénario Make qui reçoit l'email + la dictée du devis
-*/
 const webhookMail = "https://hook.eu1.make.com/TON_WEBHOOK_MAIL";
 const webhookDevis = "https://hook.eu1.make.com/TON_WEBHOOK_DEVIS";
 
 let currentTab = "mail";
-let hasSent = {
-  mail: false,
-  devis: false
-};
-
-let transcriptStore = {
-  mail: "",
-  devis: ""
-};
+let hasSent = { mail: false, devis: false };
+let transcriptStore = { mail: "", devis: "" };
 
 let recognition = null;
 let isRecording = false;
 let currentRecordingTab = null;
 let silenceTimer = null;
 let finalSent = false;
+let emailStore = { mail: "", devis: "" };
 
 function showToast(message) {
   const existing = document.querySelector(".success-toast");
@@ -374,11 +330,29 @@ function switchTab(tab, el) {
   render();
 }
 
+function escapeHtml(str) {
+  return String(str)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;");
+}
+
+function validateEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+}
+
+function getWebhookByTab(tab) {
+  return tab === "mail" ? webhookMail : webhookDevis;
+}
+
 function render() {
   const content = document.getElementById("content");
 
   if (hasSent[currentTab]) {
-    const title = currentTab === "mail" ? "Votre mail est en cours d’envoi" : "Votre devis est en cours d’envoi";
+    const title = currentTab === "mail"
+      ? "Votre mail est en cours d’envoi"
+      : "Votre devis est en cours d’envoi";
+
     const text = currentTab === "mail"
       ? "Votre demande a bien été prise en compte. Vous allez recevoir votre mail d’ici quelques secondes."
       : "Votre demande a bien été prise en compte. Vous allez recevoir votre devis d’ici quelques secondes.";
@@ -396,12 +370,6 @@ function render() {
 
   const isMail = currentTab === "mail";
   const title = isMail ? "Test public - Mail vocal" : "Test public - Devis vocal";
-  const intro = isMail
-    ? "Cette démonstration est volontairement simplifiée pour permettre un test rapide. Les versions professionnelles sont plus avancées, plus fiables et mieux configurées."
-    : "Cette démonstration est volontairement simplifiée pour permettre un test rapide. Les versions professionnelles sont plus avancées, plus fiables et mieux configurées.";
-  const placeholder = isMail
-    ? "Votre demande vocale s’affichera ici..."
-    : "Votre demande vocale s’affichera ici...";
 
   const examples = isMail
     ? `
@@ -428,7 +396,10 @@ function render() {
 
       <div class="helper-box">
         <div class="helper-title">Démo publique</div>
-        <div class="helper-text">${intro}</div>
+        <div class="helper-text">
+          Cette démonstration est volontairement simplifiée pour permettre un test rapide.
+          Les versions professionnelles sont plus avancées, plus fiables et mieux configurées.
+        </div>
       </div>
 
       <div>
@@ -438,16 +409,15 @@ function render() {
           class="text-input"
           type="email"
           placeholder="vous@email.com"
-          value=""
+          value="${escapeHtml(emailStore[currentTab] || "")}"
           autocomplete="email"
+          oninput="emailStore[currentTab] = this.value"
         >
       </div>
 
       <div class="helper-box">
         <div class="helper-title">Exemples à dicter</div>
-        <div class="examples">
-          ${examples}
-        </div>
+        <div class="examples">${examples}</div>
       </div>
 
       <div>
@@ -455,7 +425,7 @@ function render() {
         <textarea
           id="transcript"
           class="text-area"
-          placeholder="${placeholder}"
+          placeholder="Votre demande vocale s’affichera ici..."
           readonly
         >${escapeHtml(transcriptStore[currentTab] || "")}</textarea>
       </div>
@@ -480,21 +450,6 @@ function render() {
   }
 }
 
-function escapeHtml(str) {
-  return str
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;");
-}
-
-function validateEmail(email) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
-}
-
-function getWebhookByTab(tab) {
-  return tab === "mail" ? webhookMail : webhookDevis;
-}
-
 function getRecognition() {
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   if (!SpeechRecognition) return null;
@@ -509,8 +464,7 @@ function getRecognition() {
 function startDictation() {
   if (hasSent[currentTab]) return;
 
-  const emailInput = document.getElementById("emailInput");
-  const email = emailInput ? emailInput.value.trim() : "";
+  const email = (emailStore[currentTab] || "").trim();
 
   if (!validateEmail(email)) {
     showToast("Veuillez entrer un email valide");
@@ -518,7 +472,6 @@ function startDictation() {
   }
 
   const rec = getRecognition();
-
   if (!rec) {
     showToast("Dictée vocale non prise en charge sur cet appareil");
     return;
@@ -531,7 +484,6 @@ function startDictation() {
 
   let finalTranscript = transcriptStore[currentTab] || "";
 
-  updateStatus("Autorisez le micro puis commencez à parler.");
   render();
 
   recognition.onresult = (event) => {
@@ -562,8 +514,8 @@ function startDictation() {
   };
 
   recognition.onerror = () => {
-    updateStatus("Impossible d’utiliser le micro pour le moment.");
     stopDictation(false);
+    showToast("Impossible d’utiliser le micro pour le moment");
   };
 
   recognition.onend = () => {
@@ -574,13 +526,12 @@ function startDictation() {
 
   try {
     recognition.start();
-    updateStatus("Dictée en cours...");
     resetSilenceTimer();
   } catch {
-    showToast("Impossible de démarrer la dictée");
     isRecording = false;
     currentRecordingTab = null;
     render();
+    showToast("Impossible de démarrer la dictée");
   }
 }
 
@@ -610,39 +561,31 @@ function stopDictation(shouldSend) {
   sendCurrentRequest();
 }
 
-function updateStatus(text) {
-  const el = document.getElementById("statusLine");
-  if (el) el.textContent = text;
-}
-
 async function sendCurrentRequest() {
   if (finalSent || !currentRecordingTab) return;
 
   finalSent = true;
 
   const tab = currentRecordingTab;
-  const emailInput = document.getElementById("emailInput");
-  const email = emailInput ? emailInput.value.trim() : "";
+  const email = (emailStore[tab] || "").trim();
   const transcript = (transcriptStore[tab] || "").trim();
   const webhook = getWebhookByTab(tab);
 
   if (!validateEmail(email)) {
-    showToast("Email invalide");
     isRecording = false;
     currentRecordingTab = null;
     render();
+    showToast("Email invalide");
     return;
   }
 
   if (!transcript) {
-    showToast("Aucune dictée détectée");
     isRecording = false;
     currentRecordingTab = null;
     render();
+    showToast("Aucune dictée détectée");
     return;
   }
-
-  updateStatus("Envoi en cours...");
 
   try {
     await fetch(webhook, {
@@ -664,9 +607,7 @@ async function sendCurrentRequest() {
   showToast(tab === "mail" ? "Mail en préparation" : "Devis en préparation");
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  render();
-});
+document.addEventListener("DOMContentLoaded", render);
 </script>
 
 </body>
