@@ -3,274 +3,251 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Clarity Systems - Démo vocale</title>
+
+<title>Clarity Systems - Vérifications</title>
 
 <style>
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", Arial, sans-serif;
-  background: #f2f2f7;
-  display: flex;
-  justify-content: center;
-  padding: 20px;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", Arial, sans-serif;
+  background: #f2f2f7;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
 }
 
 #app {
-  background: rgba(255,255,255,0.92);
-  width: 100%;
-  max-width: 420px;
-  height: 90vh;
-  border-radius: 22px;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 18px 40px rgba(0,0,0,0.10);
-  overflow: hidden;
-  backdrop-filter: blur(12px);
+  background: rgba(255,255,255,0.92);
+  width: 100%;
+  max-width: 420px;
+  height: 90vh;
+  border-radius: 22px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.10);
+  overflow: hidden;
+  backdrop-filter: blur(12px);
 }
 
 header {
-  padding: 16px;
-  text-align: center;
-  border-bottom: 1px solid rgba(0,0,0,0.06);
-  background: rgba(255,255,255,0.82);
-  backdrop-filter: blur(10px);
+  padding: 16px;
+  text-align: center;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  background: rgba(255,255,255,0.82);
+  backdrop-filter: blur(10px);
 }
 
 .logo {
-  width: 220px;
-  max-width: 100%;
+  width: 220px;
+  max-width: 100%;
 }
 
 .tabs {
-  display: flex;
-  border-bottom: 1px solid rgba(0,0,0,0.05);
-  background: rgba(255,255,255,0.76);
-  backdrop-filter: blur(10px);
+  display: flex;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  background: rgba(255,255,255,0.76);
+  backdrop-filter: blur(10px);
 }
 
 .tab {
-  flex: 1;
-  padding: 14px 8px;
-  text-align: center;
-  cursor: pointer;
-  font-weight: 700;
-  font-size: 14px;
-  color: #111;
-  transition: color 0.2s ease;
+  flex: 1;
+  padding: 14px 8px;
+  text-align: center;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 14px;
+  color: #111;
+  transition: color 0.2s ease;
 }
 
 .tab.active {
-  color: #209DB5;
-  border-bottom: 3px solid #209DB5;
+  color: #209DB5;
+  border-bottom: 3px solid #209DB5;
 }
 
 #content {
-  flex: 1;
-  overflow-y: auto;
-  padding: 8px;
-  background: #f6f6f8;
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px;
+  background: #f6f6f8;
 }
 
 .item {
-  background: rgba(255,255,255,0.84);
-  padding: 12px;
-  border-radius: 18px;
-  margin-bottom: 8px;
-  box-shadow: 0 3px 12px rgba(0,0,0,0.05);
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.25s ease;
-  backdrop-filter: blur(10px);
+  background: rgba(255,255,255,0.84);
+  padding: 8px 12px;
+  border-radius: 18px;
+  margin-bottom: 8px;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.05);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.25s ease;
+  backdrop-filter: blur(10px);
 }
 
 .item:active {
-  transform: scale(0.985);
+  transform: scale(0.985);
+}
+
+.item.red {
+  border-left: 4px solid #e74c3c;
+}
+
+.item.green {
+  border-left: 4px solid #2ecc71;
+}
+
+.item.orange {
+  border-left: 4px solid #f39c12;
 }
 
 .item-info {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  flex: 1;
-  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
 }
 
 .item h3 {
-  margin: 0;
-  font-size: 14px;
-  font-weight: 700;
-  line-height: 1.15;
-  color: #111;
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.15;
+  color: #111;
 }
 
 .item p {
-  margin: 0;
-  font-size: 11px;
-  line-height: 1.25;
-  color: #8e8e93;
+  margin: 0;
+  font-size: 11px;
+  line-height: 1.15;
+  color: #8e8e93;
+  text-transform: capitalize;
 }
 
 button {
-  background: linear-gradient(180deg, #2aa8c1 0%, #209DB5 100%);
-  color: white;
-  border: none;
-  height: 31px;
-  padding: 0 13px;
-  border-radius: 10px;
-  font-size: 11px;
-  font-weight: 700;
-  min-width: 74px;
-  flex-shrink: 0;
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(32,157,181,0.22);
-  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+  background: linear-gradient(180deg, #2aa8c1 0%, #209DB5 100%);
+  color: white;
+  border: none;
+  height: 31px;
+  padding: 0 13px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 700;
+  min-width: 74px;
+  flex-shrink: 0;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(32,157,181,0.22);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
 }
 
 button:hover {
-  box-shadow: 0 6px 14px rgba(32,157,181,0.28);
+  box-shadow: 0 6px 14px rgba(32,157,181,0.28);
 }
 
 button:active {
-  transform: scale(0.97);
-  opacity: 0.95;
+  transform: scale(0.97);
+  opacity: 0.95;
 }
 
-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  box-shadow: none;
+.empty {
+  text-align: center;
+  color: #777;
+  margin-top: 40px;
+  font-size: 13px;
+  animation: fadeIn 0.25s ease;
+}
+
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.28);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(6px);
+  animation: fadeIn 0.18s ease;
+}
+
+.popup-content {
+  background: rgba(255,255,255,0.92);
+  padding: 20px;
+  border-radius: 16px;
+  width: 80%;
+  max-width: 300px;
+  text-align: center;
+  box-shadow: 0 16px 30px rgba(0,0,0,0.14);
+  backdrop-filter: blur(12px);
+  animation: popIn 0.2s ease;
+}
+
+.popup-content p {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: #111;
+}
+
+.popup-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.popup-buttons button {
+  flex: 1;
+  min-width: 0;
+}
+
+.popup-buttons button:first-child {
+  background: #ececef;
+  color: #111;
+  box-shadow: none;
+}
+
+.popup-buttons button:first-child:hover {
+  box-shadow: none;
 }
 
 .success-toast {
-  position: fixed;
-  left: 50%;
-  bottom: 28px;
-  transform: translateX(-50%);
-  background: rgba(20,20,20,0.88);
-  color: #fff;
-  padding: 10px 16px;
-  border-radius: 14px;
-  font-size: 13px;
-  font-weight: 600;
-  box-shadow: 0 10px 24px rgba(0,0,0,0.18);
-  backdrop-filter: blur(10px);
-  z-index: 9999;
-  animation: toastIn 0.25s ease;
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  transform: translateX(-50%);
+  background: rgba(20,20,20,0.88);
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 14px;
+  font-size: 13px;
+  font-weight: 600;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.18);
+  backdrop-filter: blur(10px);
+  z-index: 9999;
+  animation: toastIn 0.25s ease;
 }
 
-.input-label {
-  font-size: 11px;
-  font-weight: 700;
-  color: #111;
-  margin-bottom: 4px;
+.item.removing {
+  opacity: 0;
+  transform: translateX(10px) scale(0.98);
 }
 
-.text-input,
-.text-area {
-  width: 100%;
-  box-sizing: border-box;
-  border: 1px solid rgba(0,0,0,0.08);
-  background: rgba(255,255,255,0.85);
-  border-radius: 12px;
-  padding: 11px 12px;
-  font-size: 13px;
-  font-family: inherit;
-  color: #111;
-  outline: none;
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-.text-area {
-  min-height: 120px;
-  resize: none;
-  line-height: 1.35;
-}
-
-.helper-box {
-  background: rgba(255,255,255,0.55);
-  border-radius: 14px;
-  padding: 10px 12px;
-  border: 1px solid rgba(0,0,0,0.04);
-}
-
-.helper-title {
-  font-size: 11px;
-  font-weight: 700;
-  color: #111;
-  margin-bottom: 6px;
-}
-
-.helper-text {
-  font-size: 11px;
-  color: #8e8e93;
-  line-height: 1.35;
-}
-
-.examples {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.example-line {
-  font-size: 11px;
-  color: #8e8e93;
-  line-height: 1.35;
-}
-
-.action-row {
-  display: flex;
-  gap: 8px;
-}
-
-.action-row button {
-  flex: 1;
-  min-width: 0;
-}
-
-.status-line {
-  font-size: 11px;
-  color: #8e8e93;
-  min-height: 14px;
-}
-
-.final-screen {
-  background: rgba(255,255,255,0.84);
-  padding: 18px 14px;
-  border-radius: 18px;
-  margin-bottom: 8px;
-  box-shadow: 0 3px 12px rgba(0,0,0,0.05);
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  backdrop-filter: blur(10px);
-}
-
-.final-screen h3 {
-  margin: 0;
-  font-size: 16px;
-  color: #111;
-  text-align: center;
-}
-
-.final-screen p {
-  margin: 0;
-  font-size: 12px;
-  line-height: 1.4;
-  color: #8e8e93;
-  text-align: center;
-}
-
-.mic-note {
-  font-size: 11px;
-  color: #8e8e93;
-  text-align: center;
-  line-height: 1.35;
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 @keyframes toastIn {
-  from { opacity: 0; transform: translateX(-50%) translateY(8px); }
-  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+  from { opacity: 0; transform: translateX(-50%) translateY(8px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
 }
 </style>
 </head>
@@ -278,336 +255,210 @@ button:disabled {
 <body>
 
 <div id="app">
-  <header>
-    <img src="https://i.imgur.com/1ZFTLIo.png" class="logo" alt="Clarity Systems">
-  </header>
 
-  <div class="tabs">
-    <div class="tab active" onclick="switchTab('mail', this)">Mail vocal</div>
-    <div class="tab" onclick="switchTab('devis', this)">Devis vocal</div>
-  </div>
+<header>
+<img src="https://i.imgur.com/1ZFTLIo.png" class="logo" alt="Clarity Systems">
+</header>
 
-  <div id="content"></div>
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('today', this)">Aujourd’hui</div>
+  <div class="tab" onclick="switchTab('planning', this)">Planning</div>
+  <div class="tab" onclick="switchTab('history', this)">Historique</div>
+</div>
+
+<div id="content"></div>
+
+</div>
+
+<div class="popup" id="popup">
+  <div class="popup-content">
+    <p>Confirmer la vérification ?</p>
+    <div class="popup-buttons">
+      <button onclick="closePopup()">Annuler</button>
+      <button onclick="confirmValidation()">Confirmer</button>
+    </div>
+  </div>
 </div>
 
 <script>
-const webhookMail = "https://hook.eu1.make.com/TON_WEBHOOK_MAIL";
-const webhookDevis = "https://hook.eu1.make.com/TON_WEBHOOK_DEVIS";
+const webhookGet = "https://hook.eu1.make.com/nef2xbgyv3xbgt5tdufuhlgmur8uo5om";
+const webhookPost = "https://hook.eu1.make.com/8jn8w4ocie8mvwdoa23650iw9o3ngoyz";
+const webhookHistory = "https://hook.eu1.make.com/hvkdbbarp5tgk0azcwftpx6glful4y1f";
 
-let currentTab = "mail";
-let hasSent = { mail: false, devis: false };
-let transcriptStore = { mail: "", devis: "" };
+let data = [];
+let historyData = [];
+let currentId = null;
+let currentTab = "today";
 
-let recognition = null;
-let isRecording = false;
-let currentRecordingTab = null;
-let silenceTimer = null;
-let finalSent = false;
-let emailStore = { mail: "", devis: "" };
+async function loadData() {
+  try {
+    const mainRes = await fetch(webhookGet);
+    data = await mainRes.json();
+  } catch {
+    data = [];
+  }
 
-function showToast(message) {
-  const existing = document.querySelector(".success-toast");
-  if (existing) existing.remove();
+  try {
+    if (webhookHistory && webhookHistory !== "TON_WEBHOOK_HISTORIQUE") {
+      const historyRes = await fetch(webhookHistory);
+      historyData = await historyRes.json();
+    } else {
+      historyData = [];
+    }
+  } catch {
+    historyData = [];
+  }
 
-  const toast = document.createElement("div");
-  toast.className = "success-toast";
-  toast.textContent = message;
-  document.body.appendChild(toast);
-
-  setTimeout(() => {
-    toast.remove();
-  }, 1900);
+  render();
 }
 
 function switchTab(tab, el) {
-  if (isRecording) {
-    stopDictation(true);
-  }
-
-  currentTab = tab;
-  document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-  el.classList.add("active");
-  render();
+  currentTab = tab;
+  document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+  el.classList.add("active");
+  render();
 }
 
-function escapeHtml(str) {
-  return String(str)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;");
+function formatDateFR(dateString) {
+  const date = new Date(dateString);
+
+  let formatted = date.toLocaleDateString("fr-FR", {
+    weekday: "long",
+    day: "numeric",
+    month: "long"
+  });
+
+  return formatted.charAt(0).toUpperCase() + formatted.slice(1);
 }
 
-function validateEmail(email) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
-}
+function showToast(message) {
+  const existing = document.querySelector(".success-toast");
+  if (existing) existing.remove();
 
-function getWebhookByTab(tab) {
-  return tab === "mail" ? webhookMail : webhookDevis;
+  const toast = document.createElement("div");
+  toast.className = "success-toast";
+  toast.textContent = message;
+  document.body.appendChild(toast);
+
+  setTimeout(() => {
+    toast.remove();
+  }, 1600);
 }
 
 function render() {
-  const content = document.getElementById("content");
+  const content = document.getElementById("content");
+  content.innerHTML = "";
 
-  if (hasSent[currentTab]) {
-    const title = currentTab === "mail"
-      ? "Votre mail est en cours d’envoi"
-      : "Votre devis est en cours d’envoi";
+  const today = new Date();
+  today.setHours(0,0,0,0);
 
-    const text = currentTab === "mail"
-      ? "Votre demande a bien été prise en compte. Vous allez recevoir votre mail d’ici quelques secondes."
-      : "Votre demande a bien été prise en compte. Vous allez recevoir votre devis d’ici quelques secondes.";
+  if (currentTab === "today") {
+    const items = data.filter(item => {
+      const d = new Date(item.date);
+      d.setHours(0,0,0,0);
+      return d <= today;
+    });
 
-    content.innerHTML = `
-      <div class="final-screen">
-        <h3>${title}</h3>
-        <p>${text}</p>
-        <p>Surveillez votre boîte mail.</p>
-        <p>Pensez à vérifier vos courriers indésirables si besoin.</p>
-      </div>
-    `;
-    return;
-  }
+    if (items.length === 0) {
+      content.innerHTML = `<div class="empty">✅ Rien à vérifier aujourd’hui</div>`;
+      return;
+    }
 
-  const isMail = currentTab === "mail";
-  const title = isMail ? "Test public - Mail vocal" : "Test public - Devis vocal";
+    items.forEach(item => {
+      const d = new Date(item.date);
+      d.setHours(0,0,0,0);
 
-  const examples = isMail
-    ? `
-      <div class="example-line">• Écris un mail pour remercier un client</div>
-      <div class="example-line">• Écris un mail pour envoyer un devis</div>
-      <div class="example-line">• Écris un mail pour relancer un client</div>
-    `
-    : `
-      <div class="example-line">• Pose de carrelage, 20 m² à 20 euros le mètre carré</div>
-      <div class="example-line">• Fourniture de spots, 10 pièces à 15 euros l’unité</div>
-      <div class="example-line">• Installation portail, forfait à 3000 euros</div>
-    `;
+      let statusClass = "green";
+      if (d < today) {
+        statusClass = "red";
+      } else if (d.getTime() === today.getTime()) {
+        statusClass = "orange";
+      }
 
-  const statusText = isRecording && currentRecordingTab === currentTab
-    ? "Dictée en cours..."
-    : "Cliquez puis commencez à parler.";
+      content.innerHTML += `
+<div class="item ${statusClass}" id="item-${item.id}">
+  <div class="item-info">
+    <h3>${item.name}</h3>
+    <p>${formatDateFR(item.date)}</p>
+  </div>
+  <button onclick="openPopup('${item.id}')">Valider</button>
+</div>`;
+    });
 
-  content.innerHTML = `
-    <div class="item">
-      <div class="item-info">
-        <h3>${title}</h3>
-        <p>Essayez une version simplifiée du système.</p>
-      </div>
+  } else if (currentTab === "planning") {
+    const sorted = [...data].sort((a,b) => new Date(a.date) - new Date(b.date));
 
-      <div class="helper-box">
-        <div class="helper-title">Démo publique</div>
-        <div class="helper-text">
-          Cette démonstration est volontairement simplifiée pour permettre un test rapide.
-          Les versions professionnelles sont plus avancées, plus fiables et mieux configurées.
-        </div>
-      </div>
+    if (sorted.length === 0) {
+      content.innerHTML = `<div class="empty">Aucune donnée</div>`;
+      return;
+    }
 
-      <div>
-        <div class="input-label">Votre email</div>
-        <input
-          id="emailInput"
-          class="text-input"
-          type="email"
-          placeholder="vous@email.com"
-          value="${escapeHtml(emailStore[currentTab] || "")}"
-          autocomplete="email"
-          oninput="emailStore[currentTab] = this.value"
-        >
-      </div>
+    sorted.forEach(item => {
+      content.innerHTML += `
+<div class="item">
+  <div class="item-info">
+    <h3>${item.name}</h3>
+    <p>${formatDateFR(item.date)}</p>
+  </div>
+</div>`;
+    });
 
-      <div class="helper-box">
-        <div class="helper-title">Exemples à dicter</div>
-        <div class="examples">${examples}</div>
-      </div>
+  } else if (currentTab === "history") {
+    const sortedHistory = [...historyData].sort((a,b) => new Date(b.date) - new Date(a.date));
 
-      <div>
-        <div class="input-label">Votre dictée</div>
-        <textarea
-          id="transcript"
-          class="text-area"
-          placeholder="Votre demande vocale s’affichera ici..."
-          readonly
-        >${escapeHtml(transcriptStore[currentTab] || "")}</textarea>
-      </div>
+    if (sortedHistory.length === 0) {
+      content.innerHTML = `<div class="empty">Aucun historique</div>`;
+      return;
+    }
 
-      <div class="status-line" id="statusLine">${statusText}</div>
+    sortedHistory.forEach(item => {
+      const userLine = item.user ? ` • ${item.user}` : "";
 
-      <div class="action-row">
-        <button id="dictateBtn" onclick="startDictation()">
-          ${isRecording && currentRecordingTab === currentTab ? "Écoute en cours..." : "Commencer la dictée"}
-        </button>
-      </div>
-
-      <div class="mic-note">
-        La demande sera envoyée automatiquement dès la fin de la dictée.
-      </div>
-    </div>
-  `;
-
-  const btn = document.getElementById("dictateBtn");
-  if (isRecording && currentRecordingTab === currentTab) {
-    btn.disabled = true;
-  }
+      content.innerHTML += `
+<div class="item">
+  <div class="item-info">
+    <h3>${item.name}</h3>
+    <p>${formatDateFR(item.date)}${userLine}</p>
+  </div>
+</div>`;
+    });
+  }
 }
 
-function getRecognition() {
-  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if (!SpeechRecognition) return null;
-
-  const rec = new SpeechRecognition();
-  rec.lang = "fr-FR";
-  rec.interimResults = true;
-  rec.continuous = true;
-  return rec;
+function openPopup(id) {
+  currentId = id;
+  document.getElementById("popup").style.display = "flex";
 }
 
-function startDictation() {
-  if (hasSent[currentTab]) return;
-
-  const email = (emailStore[currentTab] || "").trim();
-
-  if (!validateEmail(email)) {
-    showToast("Veuillez entrer un email valide");
-    return;
-  }
-
-  const rec = getRecognition();
-  if (!rec) {
-    showToast("Dictée vocale non prise en charge sur cet appareil");
-    return;
-  }
-
-  recognition = rec;
-  isRecording = true;
-  currentRecordingTab = currentTab;
-  finalSent = false;
-
-  let finalTranscript = transcriptStore[currentTab] || "";
-
-  render();
-
-  recognition.onresult = (event) => {
-    let interimTranscript = "";
-    let confirmedTranscript = "";
-
-    for (let i = 0; i < event.results.length; i++) {
-      const text = event.results[i][0].transcript;
-      if (event.results[i].isFinal) {
-        confirmedTranscript += text + " ";
-      } else {
-        interimTranscript += text + " ";
-      }
-    }
-
-    if (confirmedTranscript.trim()) {
-      finalTranscript += confirmedTranscript;
-    }
-
-    transcriptStore[currentRecordingTab] = (finalTranscript + interimTranscript).trim();
-
-    const textarea = document.getElementById("transcript");
-    if (textarea) {
-      textarea.value = transcriptStore[currentRecordingTab];
-    }
-
-    resetSilenceTimer();
-  };
-
-  recognition.onerror = () => {
-    stopDictation(false);
-    showToast("Impossible d’utiliser le micro pour le moment");
-  };
-
-  recognition.onend = () => {
-    if (isRecording && !finalSent) {
-      sendCurrentRequest();
-    }
-  };
-
-  try {
-    recognition.start();
-    resetSilenceTimer();
-  } catch {
-    isRecording = false;
-    currentRecordingTab = null;
-    render();
-    showToast("Impossible de démarrer la dictée");
-  }
+function closePopup() {
+  document.getElementById("popup").style.display = "none";
 }
 
-function resetSilenceTimer() {
-  clearTimeout(silenceTimer);
-  silenceTimer = setTimeout(() => {
-    stopDictation(true);
-  }, 2200);
+async function confirmValidation() {
+  const card = document.getElementById(`item-${currentId}`);
+
+  try {
+    await fetch(webhookPost, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: currentId })
+    });
+  } catch {}
+
+  closePopup();
+
+  if (card) {
+    card.classList.add("removing");
+  }
+
+  showToast("✅ Vérification enregistrée");
+
+  setTimeout(loadData, 450);
 }
 
-function stopDictation(shouldSend) {
-  clearTimeout(silenceTimer);
-
-  if (recognition) {
-    try {
-      recognition.stop();
-    } catch {}
-  }
-
-  if (!shouldSend) {
-    isRecording = false;
-    currentRecordingTab = null;
-    render();
-    return;
-  }
-
-  sendCurrentRequest();
-}
-
-async function sendCurrentRequest() {
-  if (finalSent || !currentRecordingTab) return;
-
-  finalSent = true;
-
-  const tab = currentRecordingTab;
-  const email = (emailStore[tab] || "").trim();
-  const transcript = (transcriptStore[tab] || "").trim();
-  const webhook = getWebhookByTab(tab);
-
-  if (!validateEmail(email)) {
-    isRecording = false;
-    currentRecordingTab = null;
-    render();
-    showToast("Email invalide");
-    return;
-  }
-
-  if (!transcript) {
-    isRecording = false;
-    currentRecordingTab = null;
-    render();
-    showToast("Aucune dictée détectée");
-    return;
-  }
-
-  try {
-    await fetch(webhook, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        type: tab,
-        email: email,
-        demande: transcript
-      })
-    });
-  } catch {}
-
-  hasSent[tab] = true;
-  isRecording = false;
-  currentRecordingTab = null;
-  render();
-
-  showToast(tab === "mail" ? "Mail en préparation" : "Devis en préparation");
-}
-
-document.addEventListener("DOMContentLoaded", render);
+document.addEventListener("DOMContentLoaded", () => {
+  loadData();
+});
 </script>
 
 </body>
