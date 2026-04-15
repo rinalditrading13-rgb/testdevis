@@ -348,44 +348,36 @@ function render() {
   content.innerHTML = "";
 
   if (currentTab === "mail") {
-  content.innerHTML = `
+  content.innerHTML = `
 <div class="item">
-  <div class="item-info">
-    <h3>Test mail vocal</h3>
-    <p>Démo publique simplifiée. Les versions professionnelles sont plus complètes et plus fiables.</p>
-  </div>
+  <div class="item-info">
+    <h3>Test mail vocal</h3>
+    <p>Démo publique simplifiée. Faites le test par vous-même.</p>
+  </div>
 </div>
 
 <div class="item">
-  <div class="item-info">
-    <h3>Exemple</h3>
-    <p>Écris un mail à Anthony pour le remercier de son appel. Dis-lui que son devis sera envoyé aujourd’hui. Termine en lui souhaitant une bonne journée.</p>
-  </div>
+  <div class="item-info">
+    <h3>Exemple</h3>
+    <p>Écris un mail à Anthony pour le remercier de son appel. Dis-lui que son devis sera envoyé aujourd’hui. Termine en lui souhaitant une bonne journée.</p>
+  </div>
 </div>
 
-<div class="item">
-  <div class="item-info">
-    <h3>Email</h3>
-    <p>Recevez le résultat directement par mail</p>
-  </div>
-  <input id="emailInput" type="email" placeholder="email@exemple.com"
-    style="height:31px; border-radius:10px; border:none; padding:0 10px; font-size:11px; width:140px;">
-</div>
+<div class="item" style="display:block;">
+  <div style="margin-bottom:10px;">
+    <input id="emailInput" type="email" placeholder="Votre email"
+      style="height:31px; border-radius:10px; border:none; padding:0 10px; font-size:11px; width:100%; box-sizing:border-box;">
+  </div>
 
-<div class="item">
-  <div class="item-info">
-    <h3>Dictée</h3>
-    <p>Jusqu’à 5 lignes maximum pour ce test</p>
-  </div>
-  <button>Commencer</button>
-</div>
+  <div style="display:flex; justify-content:flex-end; margin-bottom:8px;">
+    <button>Commencer</button>
+  </div>
 
-<div class="item">
-  <div class="item-info">
-    <p>La demande sera envoyée automatiquement à la fin de la dictée.</p>
-  </div>
+  <div class="item-info">
+    <p>La demande sera envoyée automatiquement à la fin de la dictée.</p>
+  </div>
 </div>
-  `;
+  `;
 } else if (currentTab === "devis") {
     content.innerHTML = `
 <div class="item">
