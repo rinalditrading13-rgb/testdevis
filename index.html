@@ -594,6 +594,8 @@ function handleEmailInput(value) {
 }
 
 function startDictation() {
+  alert("Le bouton fonctionne");
+
   const email = (emailStore[currentTab] || "").trim();
 
   if (!email) {
@@ -614,6 +616,8 @@ function startDictation() {
 }
 
 function stopDictation() {
+  alert("Arrêt demandé");
+
   recordingState[currentTab] = "processing";
   render();
 
