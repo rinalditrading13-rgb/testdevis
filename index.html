@@ -90,18 +90,6 @@ header {
   transform: scale(0.985);
 }
 
-.item.red {
-  border-left: 4px solid #e74c3c;
-}
-
-.item.green {
-  border-left: 4px solid #2ecc71;
-}
-
-.item.orange {
-  border-left: 4px solid #f39c12;
-}
-
 .item-info {
   display: flex;
   flex-direction: column;
@@ -604,36 +592,6 @@ function render() {
 </div>
     `;
   }
-}
-
-function openPopup(id) {
-  currentId = id;
-  document.getElementById("popup").style.display = "flex";
-}
-
-function closePopup() {
-  document.getElementById("popup").style.display = "none";
-}
-
-async function confirmValidation() {
-  const card = document.getElementById(`item-${currentId}`);
-
-  try {
-    await fetch(webhookPost, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id: currentId })
-    });
-  } catch {}
-
-  closePopup();
-
-  if (card) {
-    card.classList.add("removing");
-  }
-
-  showToast("✅ Vérification enregistrée");
-  setTimeout(loadData, 450);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
