@@ -283,24 +283,7 @@ button:active {
 
 </div>
 
-<div class="popup" id="popup">
-  <div class="popup-content">
-    <p>Confirmer la vérification ?</p>
-    <div class="popup-buttons">
-      <button onclick="closePopup()">Annuler</button>
-      <button onclick="confirmValidation()">Confirmer</button>
-    </div>
-  </div>
-</div>
-
 <script>
-const webhookGet = "https://hook.eu1.make.com/nef2xbgyv3xbgt5tdufuhlgmur8uo5om";
-const webhookPost = "https://hook.eu1.make.com/8jn8w4ocie8mvwdoa23650iw9o3ngoyz";
-const webhookHistory = "https://hook.eu1.make.com/hvkdbbarp5tgk0azcwftpx6glful4y1f";
-
-let data = [];
-let historyData = [];
-let currentId = null;
 let currentTab = "mail";
   let emailStore = {
   mail: "",
@@ -321,45 +304,11 @@ let mediaRecorder = null;
 let audioChunks = [];
 let recordedBlob = null;
 
-async function loadData() {
-  try {
-    const mainRes = await fetch(webhookGet);
-    data = await mainRes.json();
-  } catch {
-    data = [];
-  }
-
-  try {
-    if (webhookHistory && webhookHistory !== "TON_WEBHOOK_HISTORIQUE") {
-      const historyRes = await fetch(webhookHistory);
-      historyData = await historyRes.json();
-    } else {
-      historyData = [];
-    }
-  } catch {
-    historyData = [];
-  }
-
-  render();
-}
-
 function switchTab(tab, el) {
   currentTab = tab;
   document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
   el.classList.add("active");
   render();
-}
-
-function formatDateFR(dateString) {
-  const date = new Date(dateString);
-
-  let formatted = date.toLocaleDateString("fr-FR", {
-    weekday: "long",
-    day: "numeric",
-    month: "long"
-  });
-
-  return formatted.charAt(0).toUpperCase() + formatted.slice(1);
 }
 
 function showToast(message) {
