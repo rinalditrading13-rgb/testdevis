@@ -372,6 +372,57 @@ function showToast(message) {
   }, 1600);
 }
 
+  function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+}
+
+function handleEmailInput(value) {
+  emailStore[currentTab] = value;
+
+  if (value.trim() === "") {
+    emailError[currentTab] = "";
+  } else if (!isValidEmail(value)) {
+    emailError[currentTab] = "Adresse email invalide";
+  } else {
+    emailError[currentTab] = "";
+  }
+}
+
+function startDictation() {
+  alert("Le bouton fonctionne");
+
+  const email = (emailStore[currentTab] || "").trim();
+
+  if (!email) {
+    emailError[currentTab] = "Entrez votre email";
+    render();
+    return;
+  }
+
+  if (!isValidEmail(email)) {
+    emailError[currentTab] = "Adresse email invalide";
+    render();
+    return;
+  }
+
+  emailError[currentTab] = "";
+  recordingState[currentTab] = "recording";
+  render();
+}
+
+function stopDictation() {
+  alert("Arrêt demandé");
+
+  recordingState[currentTab] = "processing";
+  render();
+
+  setTimeout(() => {
+    recordingState[currentTab] = "idle";
+    showToast("Traitement terminé");
+    render();
+  }, 1800);
+}
+
 function render() {
   const content = document.getElementById("content");
   content.innerHTML = "";
@@ -577,57 +628,6 @@ async function confirmValidation() {
   }
 
   showToast("✅ Vérification enregistrée");
-  function isValidEmail(email) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
-}
-
-function handleEmailInput(value) {
-  emailStore[currentTab] = value;
-
-  if (value.trim() === "") {
-    emailError[currentTab] = "";
-  } else if (!isValidEmail(value)) {
-    emailError[currentTab] = "Adresse email invalide";
-  } else {
-    emailError[currentTab] = "";
-  }
-}
-
-function startDictation() {
-  alert("Le bouton fonctionne");
-
-  const email = (emailStore[currentTab] || "").trim();
-
-  if (!email) {
-    emailError[currentTab] = "Entrez votre email";
-    render();
-    return;
-  }
-
-  if (!isValidEmail(email)) {
-    emailError[currentTab] = "Adresse email invalide";
-    render();
-    return;
-  }
-
-  emailError[currentTab] = "";
-  recordingState[currentTab] = "recording";
-  render();
-}
-
-function stopDictation() {
-  alert("Arrêt demandé");
-
-  recordingState[currentTab] = "processing";
-  render();
-
-  setTimeout(() => {
-    recordingState[currentTab] = "idle";
-    showToast("Traitement terminé");
-    render();
-  }, 1800);
-}
-
   setTimeout(loadData, 450);
 }
 
