@@ -393,6 +393,10 @@ function handleEmailInput(value) {
 }
 
 async function startDictation() {
+  if (recordingState[currentTab] === "done" || recordingState[currentTab] === "processing") {
+  return;
+}
+  
   const email = (emailStore[currentTab] || "").trim();
 
   if (!email) {
@@ -430,7 +434,7 @@ async function startDictation() {
       render();
 
       setTimeout(() => {
-        recordingState[currentTab] = "idle";
+        recordingState[currentTab] = "done";
         showToast("Audio enregistré");
         render();
       }, 1200);
@@ -507,42 +511,51 @@ function render() {
   ` : ""}
 
   ${
-    recordingState.mail === "idle" ? `
-      <div style="display:flex; justify-content:center; margin-bottom:14px;">
-        <button onclick="startDictation()">Commencer</button>
+  recordingState.mail === "idle" ? `
+    <div style="display:flex; justify-content:center; margin-bottom:14px;">
+      <button onclick="startDictation()">Commencer</button>
+    </div>
+    <div class="item-info">
+      <p>Votre mail sera généré et envoyé automatiquement.</p>
+      <p style="font-size:10px; opacity:0.6;">Version de démonstration simplifiée — les versions professionnelles sont plus complètes.</p>
+    </div>
+  ` : recordingState.mail === "recording" ? `
+    <div style="display:flex; flex-direction:column; align-items:center; margin-bottom:10px;">
+      <div style="
+        width:14px;
+        height:14px;
+        border-radius:50%;
+        background:#209DB5;
+        box-shadow:0 0 0 0 rgba(32,157,181,0.35);
+        animation:pulseMic 1.4s infinite;
+        margin-bottom:10px;
+      "></div>
+      <div style="font-size:11px; color:#8e8e93; margin-bottom:14px;">Enregistrement en cours...</div>
+      <button onclick="stopDictation()">Arrêter</button>
+    </div>
+  ` : recordingState.mail === "processing" ? `
+    <div style="display:flex; flex-direction:column; align-items:center;">
+      <div style="
+        width:14px;
+        height:14px;
+        border-radius:50%;
+        background:#209DB5;
+        opacity:0.75;
+        margin-bottom:10px;
+      "></div>
+      <div style="font-size:11px; color:#8e8e93;">Traitement en cours...</div>
+    </div>
+  ` : `
+    <div style="display:flex; flex-direction:column; align-items:center;">
+      <div style="font-size:11px; color:#8e8e93; margin-bottom:8px; text-align:center;">
+        Votre demande a bien été prise en compte.
       </div>
-      <div class="item-info">
-        <p>Votre mail sera généré et envoyé automatiquement.</p>
-        <p style="font-size:10px; opacity:0.6;">Version de démonstration simplifiée — les versions professionnelles sont plus complètes.</p>
+      <div style="font-size:11px; color:#8e8e93; text-align:center;">
+        Surveillez votre boîte mail.
       </div>
-    ` : recordingState.mail === "recording" ? `
-      <div style="display:flex; flex-direction:column; align-items:center; margin-bottom:10px;">
-        <div style="
-          width:14px;
-          height:14px;
-          border-radius:50%;
-          background:#209DB5;
-          box-shadow:0 0 0 0 rgba(32,157,181,0.35);
-          animation:pulseMic 1.4s infinite;
-          margin-bottom:10px;
-        "></div>
-        <div style="font-size:11px; color:#8e8e93; margin-bottom:14px;">Enregistrement en cours...</div>
-        <button onclick="stopDictation()">Arrêter</button>
-      </div>
-    ` : `
-      <div style="display:flex; flex-direction:column; align-items:center;">
-        <div style="
-          width:14px;
-          height:14px;
-          border-radius:50%;
-          background:#209DB5;
-          opacity:0.75;
-          margin-bottom:10px;
-        "></div>
-        <div style="font-size:11px; color:#8e8e93;">Traitement en cours...</div>
-      </div>
-    `
-  }
+    </div>
+  `
+}
 </div>
     `;
   } else if (currentTab === "devis") {
@@ -593,43 +606,52 @@ function render() {
   ` : ""}
 
   ${
-    recordingState.devis === "idle" ? `
-      <div style="display:flex; justify-content:center; margin-bottom:14px;">
-        <button onclick="startDictation()">Commencer</button>
+  recordingState.devis === "idle" ? `
+    <div style="display:flex; justify-content:center; margin-bottom:14px;">
+      <button onclick="startDictation()">Commencer</button>
+    </div>
+    <div class="item-info">
+      <p>Pour ce test, vous pouvez dicter jusqu’à 5 lignes.<br>
+      Votre devis sera généré et envoyé automatiquement.</p>
+      <p style="font-size:10px; opacity:0.6;">Version de démonstration simplifiée — les versions professionnelles sont plus complètes.</p>
+    </div>
+  ` : recordingState.devis === "recording" ? `
+    <div style="display:flex; flex-direction:column; align-items:center; margin-bottom:10px;">
+      <div style="
+        width:14px;
+        height:14px;
+        border-radius:50%;
+        background:#209DB5;
+        box-shadow:0 0 0 0 rgba(32,157,181,0.35);
+        animation:pulseMic 1.4s infinite;
+        margin-bottom:10px;
+      "></div>
+      <div style="font-size:11px; color:#8e8e93; margin-bottom:14px;">Enregistrement en cours...</div>
+      <button onclick="stopDictation()">Arrêter</button>
+    </div>
+  ` : recordingState.devis === "processing" ? `
+    <div style="display:flex; flex-direction:column; align-items:center;">
+      <div style="
+        width:14px;
+        height:14px;
+        border-radius:50%;
+        background:#209DB5;
+        opacity:0.75;
+        margin-bottom:10px;
+      "></div>
+      <div style="font-size:11px; color:#8e8e93;">Traitement en cours...</div>
+    </div>
+  ` : `
+    <div style="display:flex; flex-direction:column; align-items:center;">
+      <div style="font-size:11px; color:#8e8e93; margin-bottom:8px; text-align:center;">
+        Votre demande a bien été prise en compte.
       </div>
-      <div class="item-info">
-        <p>Pour ce test, vous pouvez dicter jusqu’à 5 lignes.<br>
-        Votre devis sera généré et envoyé automatiquement.</p>
-        <p style="font-size:10px; opacity:0.6;">Version de démonstration simplifiée — les versions professionnelles sont plus complètes.</p>
+      <div style="font-size:11px; color:#8e8e93; text-align:center;">
+        Surveillez votre boîte mail.
       </div>
-    ` : recordingState.devis === "recording" ? `
-      <div style="display:flex; flex-direction:column; align-items:center; margin-bottom:10px;">
-        <div style="
-          width:14px;
-          height:14px;
-          border-radius:50%;
-          background:#209DB5;
-          box-shadow:0 0 0 0 rgba(32,157,181,0.35);
-          animation:pulseMic 1.4s infinite;
-          margin-bottom:10px;
-        "></div>
-        <div style="font-size:11px; color:#8e8e93; margin-bottom:14px;">Enregistrement en cours...</div>
-        <button onclick="stopDictation()">Arrêter</button>
-      </div>
-    ` : `
-      <div style="display:flex; flex-direction:column; align-items:center;">
-        <div style="
-          width:14px;
-          height:14px;
-          border-radius:50%;
-          background:#209DB5;
-          opacity:0.75;
-          margin-bottom:10px;
-        "></div>
-        <div style="font-size:11px; color:#8e8e93;">Traitement en cours...</div>
-      </div>
-    `
-  }
+    </div>
+  `
+}
 </div>
     `;
   }
