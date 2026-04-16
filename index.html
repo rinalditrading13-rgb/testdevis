@@ -365,13 +365,18 @@ function render() {
 <div class="item">
   <div class="item-info">
     <h3>Test mail vocal</h3>
-    <p>Entrez votre email, puis dictez votre message.<br>
-    Vous recevrez le résultat directement par mail.</p>
-    <br>
-    <h3>Exemple à dicter</h3>
-    <p>Écris un mail à Anthony pour le remercier de son appel.<br>
-    Dis-lui que son devis sera envoyé aujourd’hui.<br>
-    Termine en lui souhaitant une bonne journée.</p>
+<p>Parlez comme d’habitude.<br>
+Votre message est transformé en mail professionnel automatiquement.</p>
+<br>
+<h3>Comment ça marche ?</h3>
+<p>1. Entrez votre email<br>
+2. Cliquez sur commencer<br>
+3. Parlez normalement</p>
+<br>
+<h3>Exemple à dicter</h3>
+<p>Écris un mail à Anthony pour le remercier de son appel.<br>
+Dis-lui que son devis sera envoyé aujourd’hui.<br>
+Termine en lui souhaitant une bonne journée.</p>
   </div>
 </div>
 
@@ -411,9 +416,10 @@ function render() {
       <button onclick="startDictation()">Commencer</button>
     </div>
     <div class="item-info">
-      <p>Votre mail sera généré et envoyé automatiquement.</p>
-      <p style="font-size:10px; opacity:0.6;">Version de démonstration simplifiée — les versions professionnelles sont plus complètes.</p>
-    </div>
+  <p>Votre mail est généré et envoyé automatiquement.</p>
+  <p style="margin-top:6px;">Pensez à vérifier vos spams / indésirables si vous ne recevez rien.</p>
+  <p style="font-size:10px; opacity:0.6; margin-top:6px;">Version de démonstration simplifiée — les versions professionnelles sont plus complètes.</p>
+</div>
   ` : recordingState.mail === "recording" ? `
     <div style="display:flex; flex-direction:column; align-items:center; margin-bottom:10px;">
       <div style="
@@ -442,11 +448,14 @@ function render() {
     </div>
   ` : `
     <div style="display:flex; flex-direction:column; align-items:center;">
-      <div style="font-size:11px; color:#8e8e93; margin-bottom:8px; text-align:center;">
-        Votre message est en cours d'envoi.
-      </div>
-      <div style="font-size:11px; color:#8e8e93; text-align:center; margin-bottom:12px;">
-  Il arrive dans quelques secondes.
+     <div style="font-size:11px; color:#8e8e93; margin-bottom:8px; text-align:center;">
+  Votre message est en cours d'envoi.
+</div>
+<div style="font-size:11px; color:#8e8e93; text-align:center; margin-bottom:8px;">
+  Il arrive dans quelques secondes.
+</div>
+<div style="font-size:11px; color:#8e8e93; text-align:center; margin-bottom:12px;">
+  Pensez à vérifier vos spams / indésirables si besoin.
 </div>
 
 <div style="text-align:center; margin-top:10px;">
