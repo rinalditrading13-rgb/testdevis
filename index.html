@@ -208,6 +208,9 @@ button:active {
 </div>
 
 <script>
+const webhookMailAudio = "https://hook.eu1.make.com/q4na5x9jj8qadnl5gjoecxzcjrlakjel";
+const webhookDevisAudio = "https://hook.eu1.make.com/gvcwymtdvuau19zpytftaceigsinnj19";
+  
 let currentTab = "mail";
   let emailStore = {
   mail: "",
@@ -300,20 +303,35 @@ async function startDictation() {
       }
     };
 
-    mediaRecorder.onstop = function() {
-      recordedBlob = new Blob(audioChunks, { type: "audio/webm" });
+    mediaRecorder.onstop = async function() {
+  recordedBlob = new Blob(audioChunks, { type: "audio/webm" });
 
-      recordingState[currentTab] = "processing";
-      render();
+  recordingState[currentTab] = "processing";
+  render();
 
-      setTimeout(() => {
-        recordingState[currentTab] = "done";
-        showToast("Audio enregistré");
-        render();
-      }, 1200);
+  const formData = new FormData();
+  formData.append("audio", recordedBlob, "audio.webm");
+  formData.append("email", emailStore[currentTab] || "");
+  formData.append("type", currentTab);
 
-      stream.getTracks().forEach(track => track.stop());
-    };
+  try {
+    const webhookUrl = getCurrentAudioWebhook();
+
+    await fetch(webhookUrl, {
+      method: "POST",
+      body: formData
+    });
+
+    recordingState[currentTab] = "done";
+    render();
+  } catch (error) {
+    recordingState[currentTab] = "idle";
+    emailError[currentTab] = "Erreur d’envoi";
+    render();
+  }
+
+  stream.getTracks().forEach(track => track.stop());
+};
 
     mediaRecorder.start();
     recordingState[currentTab] = "recording";
@@ -334,6 +352,10 @@ function stopDictation() {
   }
 }
 
+function getCurrentAudioWebhook() {
+  return currentTab === "devis" ? webhookDevisAudio : webhookMailAudio;
+}
+  
 function render() {
   const content = document.getElementById("content");
   content.innerHTML = "";
