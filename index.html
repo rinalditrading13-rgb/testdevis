@@ -441,38 +441,24 @@ function render() {
       <div style="font-size:11px; color:#8e8e93;">Traitement en cours...</div>
     </div>
   ` : `
-    <div style="display:flex; flex-direction:column; align-items:center;">
-      <div style="font-size:11px; color:#8e8e93; margin-bottom:8px; text-align:center;">
-        Votre message est en cours d'envoi.
-      </div>
-      <div style="font-size:11px; color:#8e8e93; text-align:center; margin-bottom:12px;">
-  Il arrive dans quelques secondes.
-</div>
+    ` : `
+  <div style="display:flex; flex-direction:column; align-items:center;">
+    <div style="font-size:11px; color:#8e8e93; margin-bottom:8px; text-align:center;">
+      Votre message est en cours d'envoi.
+    </div>
+    <div style="font-size:11px; color:#8e8e93; text-align:center; margin-bottom:18px;">
+      Il arrive dans quelques secondes.
+    </div>
 
-<div style="text-align:center; margin-top:10px;">
-  <div style="font-size:11px; color:#8e8e93; margin-bottom:8px;">
-    Vous voulez le même système ?
+    <div style="font-size:11px; color:#8e8e93; margin-bottom:10px; text-align:center;">
+      Vous voulez le même système ?
+    </div>
+
+    <button onclick="window.open('https://calendly.com/contact-claritysystems/prise-de-rendez-vous', '_blank')">
+      Réserver une démo
+    </button>
   </div>
-
-  <a href="https://calendly.com/contact-claritysystems/prise-de-rendez-vous" target="_blank" style="
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  height:38px;
-  padding:0 18px;
-  border-radius:999px;
-  background:linear-gradient(180deg, #2aa8c1 0%, #209DB5 100%);
-  color:#ffffff;
-  font-size:12px;
-  font-weight:700;
-  text-decoration:none;
-  box-shadow:0 4px 10px rgba(32,157,181,0.22);
-">
-  Réserver une démo
-</a>
-  `
-}
-</div>
+`
     `;
   } else if (currentTab === "devis") {
     content.innerHTML = `
@@ -558,38 +544,24 @@ function render() {
       <div style="font-size:11px; color:#8e8e93;">Traitement en cours...</div>
     </div>
   ` : `
-    <div style="display:flex; flex-direction:column; align-items:center;">
-      <div style="font-size:11px; color:#8e8e93; margin-bottom:8px; text-align:center;">
-        Votre devis est en cours de création.
-      </div>
-      <div style="font-size:11px; color:#8e8e93; text-align:center; margin-bottom:12px;">
-  Il arrive dans quelques secondes.
-</div>
+    ` : `
+  <div style="display:flex; flex-direction:column; align-items:center;">
+    <div style="font-size:11px; color:#8e8e93; margin-bottom:8px; text-align:center;">
+      Votre devis est en cours de création.
+    </div>
+    <div style="font-size:11px; color:#8e8e93; text-align:center; margin-bottom:18px;">
+      Il arrive dans quelques secondes.
+    </div>
 
-<div style="text-align:center; margin-top:10px;">
-  <div style="font-size:11px; color:#8e8e93; margin-bottom:8px;">
-    Vous voulez le même système ?
+    <div style="font-size:11px; color:#8e8e93; margin-bottom:10px; text-align:center;">
+      Vous voulez le même système ?
+    </div>
+
+    <button onclick="window.open('https://calendly.com/contact-claritysystems/prise-de-rendez-vous', '_blank')">
+      Réserver une démo
+    </button>
   </div>
-
-  <a href="https://calendly.com/contact-claritysystems/prise-de-rendez-vous" target="_blank" style="
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  height:38px;
-  padding:0 18px;
-  border-radius:999px;
-  background:linear-gradient(180deg, #2aa8c1 0%, #209DB5 100%);
-  color:#ffffff;
-  font-size:12px;
-  font-weight:700;
-  text-decoration:none;
-  box-shadow:0 4px 10px rgba(32,157,181,0.22);
-">
-  Réserver une démo
-</a>
-  `
-}
-</div>
+`
     `;
   }
 }
