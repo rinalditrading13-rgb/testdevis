@@ -248,6 +248,21 @@ button:active {
   from { opacity: 0; transform: translateX(-50%) translateY(8px); }
   to { opacity: 1; transform: translateX(-50%) translateY(0); }
 }
+
+@keyframes pulseMic {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(32,157,181,0.35);
+  }
+  70% {
+    transform: scale(1.08);
+    box-shadow: 0 0 0 12px rgba(32,157,181,0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(32,157,181,0);
+  }
+}
 </style>
 </head>
 
@@ -287,6 +302,20 @@ let data = [];
 let historyData = [];
 let currentId = null;
 let currentTab = "mail";
+  let emailStore = {
+  mail: "",
+  devis: ""
+};
+
+let emailError = {
+  mail: "",
+  devis: ""
+};
+
+let recordingState = {
+  mail: "idle",
+  devis: "idle"
+};
 
 async function loadData() {
   try {
@@ -548,6 +577,52 @@ async function confirmValidation() {
   }
 
   showToast("✅ Vérification enregistrée");
+  function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+}
+
+function handleEmailInput(value) {
+  emailStore[currentTab] = value;
+
+  if (value.trim() === "") {
+    emailError[currentTab] = "";
+  } else if (!isValidEmail(value)) {
+    emailError[currentTab] = "Adresse email invalide";
+  } else {
+    emailError[currentTab] = "";
+  }
+}
+
+function startDictation() {
+  const email = (emailStore[currentTab] || "").trim();
+
+  if (!email) {
+    emailError[currentTab] = "Entrez votre email";
+    render();
+    return;
+  }
+
+  if (!isValidEmail(email)) {
+    emailError[currentTab] = "Adresse email invalide";
+    render();
+    return;
+  }
+
+  emailError[currentTab] = "";
+  recordingState[currentTab] = "recording";
+  render();
+}
+
+function stopDictation() {
+  recordingState[currentTab] = "processing";
+  render();
+
+  setTimeout(() => {
+    recordingState[currentTab] = "idle";
+    showToast("Traitement terminé");
+    render();
+  }, 1800);
+}
 
   setTimeout(loadData, 450);
 }
