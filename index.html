@@ -317,6 +317,10 @@ let recordingState = {
   devis: "idle"
 };
 
+let mediaRecorder = null;
+let audioChunks = [];
+let recordedBlob = null;
+
 async function loadData() {
   try {
     const mainRes = await fetch(webhookGet);
@@ -388,7 +392,7 @@ function handleEmailInput(value) {
   }
 }
 
-function startDictation() {
+async function startDictation() {
   const email = (emailStore[currentTab] || "").trim();
 
   if (!email) {
@@ -404,19 +408,53 @@ function startDictation() {
   }
 
   emailError[currentTab] = "";
-  recordingState[currentTab] = "recording";
-  render();
+
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+
+    audioChunks = [];
+    recordedBlob = null;
+
+    mediaRecorder = new MediaRecorder(stream);
+
+    mediaRecorder.ondataavailable = function(event) {
+      if (event.data && event.data.size > 0) {
+        audioChunks.push(event.data);
+      }
+    };
+
+    mediaRecorder.onstop = function() {
+      recordedBlob = new Blob(audioChunks, { type: "audio/webm" });
+
+      recordingState[currentTab] = "processing";
+      render();
+
+      setTimeout(() => {
+        recordingState[currentTab] = "idle";
+        showToast("Audio enregistré");
+        render();
+      }, 1200);
+
+      stream.getTracks().forEach(track => track.stop());
+    };
+
+    mediaRecorder.start();
+    recordingState[currentTab] = "recording";
+    render();
+
+  } catch {
+    emailError[currentTab] = "Accès micro refusé ou indisponible";
+    render();
+  }
 }
 
 function stopDictation() {
-  recordingState[currentTab] = "processing";
-  render();
-
-  setTimeout(() => {
+  if (mediaRecorder && mediaRecorder.state !== "inactive") {
+    mediaRecorder.stop();
+  } else {
     recordingState[currentTab] = "idle";
-    showToast("Traitement terminé");
     render();
-  }, 1800);
+  }
 }
 
 function render() {
