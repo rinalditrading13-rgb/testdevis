@@ -40,8 +40,9 @@
     display: flex;
     align-items: flex-start;
     justify-content: center;
-    padding: 24px 16px 40px;
+    padding: 0;
     min-height: 100vh;
+    width: 100%;
   }
 
   /* Subtle background texture */
@@ -61,7 +62,8 @@
     z-index: 1;
     background: rgba(248,249,252,0.92);
     width: 100%;
-    max-width: 420px;
+    max-width: 600px;
+    border-radius: var(--radius-lg);
     border-radius: var(--radius-lg);
     display: flex;
     flex-direction: column;
@@ -71,6 +73,14 @@
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(255,255,255,0.6);
     animation: appIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  @media (max-width: 560px) {
+    #app {
+      width: 100%;
+      min-width: unset;
+      max-width: 100%;
+    }
   }
 
   @keyframes appIn {
@@ -161,6 +171,8 @@
     flex-direction: column;
     gap: 8px;
     scrollbar-width: none;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   #content::-webkit-scrollbar { display: none; }
@@ -173,6 +185,8 @@
     box-shadow: var(--shadow-sm);
     border: 1px solid rgba(255,255,255,0.9);
     animation: cardIn 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   @keyframes cardIn {
@@ -205,12 +219,16 @@
     color: var(--text-primary);
     line-height: 1.2;
     letter-spacing: -0.01em;
+    display: block;
+    width: 100%;
   }
 
   .info-body {
     font-size: 13px;
     line-height: 1.55;
     color: var(--text-secondary);
+    display: block;
+    width: 100%;
   }
 
   .steps { display: flex; flex-direction: column; gap: 6px; }
@@ -247,13 +265,16 @@
     font-size: 12px;
     line-height: 1.8;
     color: var(--text-secondary);
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
   }
 
   .example-block span {
     display: block;
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
+    text-overflow: clip;
   }
 
   .divider {
@@ -643,8 +664,8 @@ function render() {
   const INFO = {
     mail: {
       label: "Messagerie intelligente",
-      title: "Mail vocal",
-      desc: "Parlez naturellement, recevez votre email professionnel rédigé en quelques secondes.",
+      title: "Fini de taper vos emails",
+      desc: "Parlez, votre email professionnel part tout seul en quelques secondes.<br>Testez ici — imaginez le résultat pour vos clients.",
       steps: ["Entrez votre adresse email", "Appuyez sur Commencer", "Parlez normalement"],
       exampleLabel: "Exemple à dicter",
       example: `« Écris à Anthony pour le remercier de sa visite.\nDis-lui que son devis sera envoyé aujourd'hui.\nTermine en lui souhaitant une bonne journée. »`,
@@ -655,7 +676,7 @@ function render() {
     devis: {
       label: "Devis automatisé",
       title: "Parlez, on s'occupe du reste",
-      desc: "Dictez vos prestations à voix haute. Recevez votre PDF en quelques secondes.",
+      desc: "Dictez vos prestations, votre PDF part tout seul en quelques secondes.<br>Testez ici — imaginez le résultat pour vos clients.",
       steps: ["Entrez votre adresse email", "Appuyez sur Commencer", "Dictez vos lignes de devis"],
       exampleLabel: "Exemples à dicter",
       example: `• Pose de carrelage, 20 m² à 20 € le mètre\n• Fourniture de spots, 10 pièces à 15 € l'unité\n• Installation portail, forfait à 3 000 €`,
